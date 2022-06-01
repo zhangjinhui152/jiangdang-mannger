@@ -89,7 +89,7 @@ const routes = [
                 path: "/upload",
                 name: "upload",
                 meta: {
-                    title: "上传插件",
+                    title: "批量上传",
                 },
                 component: () =>
                     import(

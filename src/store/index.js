@@ -3,7 +3,11 @@ import {createStore} from 'vuex'
 export default createStore({
     state: {
         tagsList: [],
-        collapse: false
+        collapse: false,
+        baseUrl:"http://127.0.0.1:4523/mock/985489",
+        bookUrl:"/manage/insert/book",
+        vrUrl:"/manage/insert/vrList",
+        newsUrl:"/manage/insert/dynamic", 
     },
     mutations: {
         delTagsItem(state, data) {

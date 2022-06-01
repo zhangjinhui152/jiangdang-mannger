@@ -20,26 +20,27 @@
 					<em>点击上传</em>
 				</div>
 				<template #tip>
-					<div class="el-upload__tip">
-						要创建哪个就点哪个按钮 别乱点! 别乱点! 别乱点!
-					</div>
+					<div class="el-upload__tip">要创建哪个就选哪个 别 tm乱选</div>
 					<br />
 				</template>
 			</el-upload>
-			<el-container style="width: 30%;">
-				<el-row >
-				<el-col :span="8">
-					<el-button type="primary" @click="submit_book">增加书</el-button>
+
+			<el-row :gutter="20">
+				<el-col :span="4">
+					<el-select v-model="currentValue" placeholder="Select">
+						<el-option
+							v-for="item in options"
+							:key="item.value"
+							:label="item.label"
+							:value="item.value"
+							:disabled="item.disabled"
+						/>
+					</el-select>
 				</el-col>
-				<el-col :span="8">
-					<el-button type="primary">增加动态</el-button>
-				</el-col>
-				<el-col :span="8">
-					<el-button type="primary">增加vr网站</el-button>
+				<el-col :span="2">
+					<el-button type="primary" @click="submit()"> 发送</el-button>
 				</el-col>
 			</el-row>
-			</el-container>
-			
 		</div>
 	</div>
 </template>
@@ -48,12 +49,44 @@
 import { read, utils } from "xlsx";
 import { ElLoading } from "element-plus";
 import { ElMessage } from "element-plus";
-import {ref} from 'vue'
+import { ref } from "vue";
+import { useStore } from "vuex";
+import axios from "axios";
 import "cropperjs/dist/cropper.css";
 export default {
 	name: "upload",
 	setup() {
 		const params = ref([]);
+
+		const store = useStore();
+		let baseUrl = store.state.baseUrl;
+		let bookUrl = baseUrl + store.state.bookUrl;
+		let vrUrl = baseUrl + store.state.vrUrl;
+		let newsUrl = baseUrl + store.state.newsUrl;
+		let currentValue = ref("");
+		const options = [
+			{
+				value: bookUrl,
+				label: "上传book",
+			},
+			{
+				value: vrUrl,
+				label: "上传VR",
+			},
+			{
+				value: newsUrl,
+				label: "上传新闻动态",
+			},
+			{
+				value: "Option4",
+				label: "Option4",
+			},
+			{
+				value: "Option5",
+				label: "时光倒流",
+				disabled: true,
+			},
+		];
 		const readFile = (file) => {
 			return new Promise((resolve) => {
 				let reader = new FileReader();
@@ -65,11 +98,15 @@ export default {
 		};
 		let tableData = [];
 		const handle = async (file) => {
-			const loadingInstance = ElLoading.service({ fullscreen: true });
+			const loadingInstance = ElLoading.service({
+				fullscreen: true,
+			});
 
 			try {
 				let dataBinary = await readFile(file.raw);
-				const workbook = read(dataBinary, { type: "binary" });
+				const workbook = read(dataBinary, {
+					type: "binary",
+				});
 
 				workbook.SheetNames.forEach((item) => {
 					params.value.push({
@@ -94,14 +131,49 @@ export default {
 
 			return params;
 		};
-		const submit_book = ()=>{
+		const submit_url = (url, send) => {
+			axios.post(url, {
+					data: send,
+				})
+				.then((res) => {
+					console.log(res);
+					ElMessage({
+						message: `成功了 ${(res.data.result, new Date().toString())}`,
+						type: "info",
+					});
+					params.value = [];
+				})
+				.catch((err) => {
+					err;
+					ElMessage({
+						message: `失败 重新尝试 无需上传 ${new Date().toString()}`,
+						type: "info",
+					});
+				});
+		};
+		const submit = () => {
+			if (params.value[0] === undefined || params.value[0] === null) {
+				ElMessage({
+					message: `上传文件啊 铁咩`,
+					type: "error",
+				});
+				console.log(currentValue.value);
+				return;
+			}
+
 			let send = JSON.stringify(params.value[0].dataList);
-			console.log(send)
-		}
+
+			submit_url(currentValue.value, send);
+		};
 		return {
 			handle,
 			params,
-			submit_book,
+			submit,
+			bookUrl,
+			vrUrl,
+			newsUrl,
+			options,
+			currentValue,
 		};
 	},
 	data() {
