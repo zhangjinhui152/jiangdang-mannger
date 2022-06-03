@@ -10,6 +10,7 @@ export default createStore({
         newsUrl:"/manage/insert/dynamic", 
         updateUserUrl:"/manage/update/user", 
         delUserUrl:"/manage/delete/user", 
+        userUrl:"/manage/insert/user", 
     },
     mutations: {
         delTagsItem(state, data) {

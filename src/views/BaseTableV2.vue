@@ -16,6 +16,13 @@
 					@click="delAllSelection"
 					>批量删除
 				</el-button>
+				<el-button
+					type="primary"
+					icon="el-icon-delete"
+					class="handle-del mr10"
+					@click="handleAdd()"
+					>新增用户
+				</el-button>
 			</div>
 			<el-table
 				:data="currenTableData"
@@ -104,6 +111,9 @@
 				<el-form-item label="用户名">
 					<el-input v-model="form.name"></el-input>
 				</el-form-item>
+				<el-form-item label="密码">
+					<el-input v-model="form.password"></el-input>
+				</el-form-item>
 				<el-form-item label="邮箱">
 					<el-input v-model="form.email"></el-input>
 				</el-form-item>
@@ -124,11 +134,41 @@
 				</span>
 			</template>
 		</el-dialog>
+
+		<el-dialog title="增加" v-model="editVisible_add" width="40%">
+			<el-form ref="form" :model="form" label-width="70px">
+				<el-form-item label="用户名">
+					<el-input v-model="form.name"></el-input>
+				</el-form-item>
+				<el-form-item label="密码">
+					<el-input v-model="form.password"></el-input>
+				</el-form-item>
+				<el-form-item label="邮箱">
+					<el-input v-model="form.email"></el-input>
+				</el-form-item>
+				<el-form-item label="身份">
+					<el-input v-model="form.grade_id"></el-input>
+				</el-form-item>
+				<el-form-item label="性别">
+					<el-input v-model="form.sex"></el-input>
+				</el-form-item>
+				<el-form-item label="头像">
+					<el-input v-model="form.header_img"></el-input>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="editVisible_add = false">取 消</el-button>
+					<el-button type="primary" @click="saveEdit_add">确 定</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
 // import { fetchData } from "../api/index";
+import crypto from "crypto";
 import axios from "axios";
 export default {
 	setup() {
@@ -143,9 +183,15 @@ export default {
 			header_img: "header_img",
 			bg_img: "bg_img",
 		};
-
+		const getmd5 = function (pwd) {
+			var md5 = crypto.createHash("md5");
+			md5.update(pwd);
+			var password = md5.digest("hex");
+			return password;
+		};
 		return {
 			user_table_head,
+			getmd5,
 		};
 	},
 	name: "basetable",
@@ -157,6 +203,7 @@ export default {
 				pageIndex: 1,
 				pageSize: 10,
 			},
+			editVisible_add: false,
 			tableData: [],
 			currenTableData: [],
 			multipleSelection: [],
@@ -213,6 +260,7 @@ export default {
 						.then(() => {
 							this.$message.success("删除成功");
 							this.tableData.splice(index, 1);
+							this.currenTableData.splice(index, 1);
 						})
 						.catch((err) => {
 							this.$message.error("ERROR 已报告 W A U 监察中心 >>>>" + err);
@@ -231,6 +279,26 @@ export default {
 			this.delList = this.delList.concat(this.multipleSelection);
 			for (let i = 0; i < length; i++) {
 				str += this.multipleSelection[i].id + " ";
+				axios
+						.post(
+							`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`,
+							{
+								id:this.multipleSelection[i].id 
+							}
+						)
+						.then(() => {
+							this.$message.success("删除成功 防止误删 刷新后重新加载!");
+							// this.tableData.map((value)=>{
+							// 	if (value.id != 1) {
+							// 		console.log(value.id == str)
+							// 	}
+								
+
+							// })
+													})
+						.catch((err) => {
+							this.$message.error("ERROR 已报告 W A U 监察中心 >>>>" + err);
+						});
 			}
 			// 删除!
 
@@ -244,11 +312,22 @@ export default {
 			console.log(row);
 			this.editVisible = true;
 		},
+		handleAdd() {
+			this.form;
+			this.editVisible_add = true;
+		},
 		// 保存编辑
 		saveEdit() {
 			this.editVisible = false;
 
 			// this.$set(this.tableData, this.idx, this.form);
+			this.form.password = this.getmd5(this.form.password);
+			this.form.password = this.getmd5(this.form.password);
+			this.form.password = this.getmd5(this.form.password);
+			this.form.password = this.form.password.slice(0, 10);
+
+			console.log(this.form.password);
+
 			const data = console.log(JSON.stringify(this.form));
 			axios
 				.post(
@@ -264,12 +343,31 @@ export default {
 					console.error(err);
 				});
 		},
+		saveEdit_add() {
+			this.editVisible_add = false;
+
+			// this.$set(this.tableData, this.idx, this.form);
+			this.form.password = this.getmd5(this.form.password);
+			this.form.password = this.getmd5(this.form.password);
+			this.form.password = this.getmd5(this.form.password);
+			this.form.password = this.form.password.slice(0, 10);
+			const data = JSON.stringify(this.form);
+			console.log(data);
+			axios
+				.post(`${this.$store.state.baseUrl}${this.$store.state.userUrl}`, data)
+				.then((res) => {
+					this.$message.success(`add 用户=>${this.form.name}<====成功了吗?`);
+					console.log(res);
+				})
+				.catch((err) => {
+					this.$message.error(`ERROR 出现${err} 已报告SERN`);
+					console.error(err);
+				});
+		},
 		// 分页导航
 		handlePageChange(val) {
 			--val;
 			console.log(val);
-
-
 
 			this.currenTableData = this.tableData.slice(
 				val * 10,
