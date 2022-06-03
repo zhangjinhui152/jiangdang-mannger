@@ -32,7 +32,7 @@ const routes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "table" */
-                        "../views/BaseTable.vue"
+                        "../views/BaseTableV2.vue"
                     ),
             },
             {

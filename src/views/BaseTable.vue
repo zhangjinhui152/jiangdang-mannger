@@ -31,15 +31,7 @@
                 <el-table-column label="账户余额">
                     <template #default="scope">￥{{ scope.row.money }}</template>
                 </el-table-column>
-                <el-table-column label="头像(查看大图)" align="center">
-                    <template #default="scope">
-                        <el-image
-                            class="table-td-thumb"
-                            :src="scope.row.thumb"
-                            :preview-src-list="[scope.row.thumb]"
-                        ></el-image>
-                    </template>
-                </el-table-column>
+                
                 <el-table-column prop="address" label="地址"></el-table-column>
                 <el-table-column label="状态" align="center">
                     <template #default="scope">

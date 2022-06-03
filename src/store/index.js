@@ -8,6 +8,8 @@ export default createStore({
         bookUrl:"/manage/insert/book",
         vrUrl:"/manage/insert/vrList",
         newsUrl:"/manage/insert/dynamic", 
+        updateUserUrl:"/manage/update/user", 
+        delUserUrl:"/manage/delete/user", 
     },
     mutations: {
         delTagsItem(state, data) {
