@@ -62,8 +62,23 @@ export default {
 				},
 				{
 					icon: "el-icon-lx-cascades",
-					index: "table",
 					title: "基础表格",
+					subs: [
+						{
+							icon: "el-icon-lx-attention",
+							index: "table",
+							title: "USER表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table2",
+							title: "NEWS表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table3",
+							title: "基础表格",
+						},]
 				},
 				{
 					icon: "el-icon-lx-copy",

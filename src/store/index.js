@@ -11,6 +11,11 @@ export default createStore({
         updateUserUrl:"/manage/update/user", 
         delUserUrl:"/manage/delete/user", 
         userUrl:"/manage/insert/user", 
+        delNewUrl:"/manage/delete/news", 
+        delFeedbackUrl:"/manage/delete/feedback", 
+        selectNewUrl:"/manage/select/AllNews", 
+        selectuserUrl:"/manage/select/Alluser", 
+        selectFeedBackUrl:"/manage/select/AllFeedBack", 
     },
     mutations: {
         delTagsItem(state, data) {

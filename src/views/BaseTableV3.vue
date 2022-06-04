@@ -38,42 +38,24 @@
 					align="center"
 				></el-table-column>
 				<el-table-column
-					:prop="user_table_head.id"
+					:prop="table_head.id"
 					label="ID"
 					width="55"
 					align="center"
 				></el-table-column>
-				<el-table-column :prop="user_table_head.name" label="用户名">
+				<el-table-column :prop="table_head.title" label="title">
 				</el-table-column>
-				<el-table-column :prop="user_table_head.sex" label="性别">
+				<el-table-column :prop="table_head.sub_title" label="sub_title">
 				</el-table-column>
-				<el-table-column :prop="user_table_head.password" label="密码">
-					<template #default="scope">{{ scope.row.password }}</template>
-				</el-table-column>
-
 				<el-table-column
-					:prop="user_table_head.email"
-					label="邮箱"
+					:prop="table_head.preview"
+					label="preview"
 				></el-table-column>
 
-				<el-table-column label="状态" align="center">
-					<template #default="scope">
-						<el-tag
-							:type="
-								scope.row.grade_id === 1
-									? 'success'
-									: scope.row.grade_id === 0
-									? 'danger'
-									: ''
-							"
-							>{{ scope.row.grade_id === 1 ? "老师" : "学生" }}</el-tag
-						>
-					</template>
-				</el-table-column>
 
 				<el-table-column
-					:prop="user_table_head.header_img"
-					label="注册时间"
+					:prop="table_head.link"
+					label="link"
 				></el-table-column>
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
@@ -108,24 +90,19 @@
 		<!-- 编辑弹出框 -->
 		<el-dialog title="编辑" v-model="editVisible" width="40%">
 			<el-form ref="form" :model="form" label-width="70px">
-				<el-form-item label="用户名">
-					<el-input v-model="form.name"></el-input>
+				<el-form-item :label="table_head.title">
+					<el-input v-model="form.title"></el-input>
 				</el-form-item>
-				<el-form-item label="密码">
-					<el-input v-model="form.password"></el-input>
+				<el-form-item :label="table_head.sub_title">
+					<el-input v-model="form.sub_title"></el-input>
 				</el-form-item>
-				<el-form-item label="邮箱">
-					<el-input v-model="form.email"></el-input>
+				<el-form-item :label="table_head.preview">
+					<el-input v-model="form.preview"></el-input>
 				</el-form-item>
-				<el-form-item label="身份">
-					<el-input v-model="form.grade_id"></el-input>
+				<el-form-item :label="table_head.link">
+					<el-input v-model="form.link"></el-input>
 				</el-form-item>
-				<el-form-item label="性别">
-					<el-input v-model="form.sex"></el-input>
-				</el-form-item>
-				<el-form-item label="头像">
-					<el-input v-model="form.header_img"></el-input>
-				</el-form-item>
+
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
@@ -138,23 +115,18 @@
 		<el-dialog title="增加" v-model="editVisible_add" width="40%">
 			<el-form ref="form" :model="form" label-width="70px">
 				<el-form-item label="用户名">
-					<el-input v-model="form.name"></el-input>
+					<el-input v-model="form.title"></el-input>
 				</el-form-item>
 				<el-form-item label="密码">
-					<el-input v-model="form.password"></el-input>
+					<el-input v-model="form.sub_title"></el-input>
 				</el-form-item>
 				<el-form-item label="邮箱">
-					<el-input v-model="form.email"></el-input>
+					<el-input v-model="form.previre"></el-input>
 				</el-form-item>
 				<el-form-item label="身份">
-					<el-input v-model="form.grade_id"></el-input>
+					<el-input v-model="form.link"></el-input>
 				</el-form-item>
-				<el-form-item label="性别">
-					<el-input v-model="form.sex"></el-input>
-				</el-form-item>
-				<el-form-item label="头像">
-					<el-input v-model="form.header_img"></el-input>
-				</el-form-item>
+
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
@@ -172,16 +144,12 @@ import crypto from "crypto";
 import axios from "axios";
 export default {
 	setup() {
-		const user_table_head = {
+		const table_head = {
 			id: "id",
-			name: "name",
-			password: "password",
-			email: "email",
-			grade_id: "grade_id",
-			sex: "sex",
-			quantity: "quantity",
-			header_img: "header_img",
-			bg_img: "bg_img",
+			title: "title",
+			sub_title: "sub_title",
+			preview: "preview",
+			link: "link",
 		};
 		const getmd5 = function (pwd) {
 			var md5 = crypto.createHash("md5");
@@ -190,7 +158,7 @@ export default {
 			return password;
 		};
 		return {
-			user_table_head,
+			table_head,
 			getmd5,
 		};
 	},
@@ -222,13 +190,13 @@ export default {
 		// 获取 数据
 		getData() {
 			axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selectuserUrl}`, {
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selectNewUrl}`, {
 					page1: 1,
 					page2: 50,
 				})
 				.then((res) => {
 					this.tableData = res.data.data;
-					console.log(this.tableData);
+					console.log(res.data.data);
 					this.currenTableData = this.tableData.slice(this.pageIndex * 10, 10);
 					this.pageTotal = this.tableData.length;
 					// this.query.pageSize= this.tableData.length;
@@ -250,11 +218,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delUserUrl}`
+						`${this.$store.state.baseUrl}+${this.$store.state.delNewUrl}`
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`,
+							`${this.$store.state.baseUrl}${this.$store.state.delNewUrl}`,
 							this.form.id
 						)
 						.then(() => {

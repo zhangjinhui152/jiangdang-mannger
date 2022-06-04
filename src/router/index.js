@@ -27,12 +27,36 @@ const routes = [
                 path: "/table",
                 name: "basetable",
                 meta: {
-                    title: "表格",
+                    title: "用户表格",
                 },
                 component: () =>
                     import(
                         /* webpackChunkName: "table" */
                         "../views/BaseTableV2.vue"
+                    ),
+            },
+            {
+                path: "/table2",
+                name: "basetable2",
+                meta: {
+                    title: "新闻表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV3.vue"
+                    ),
+            },
+            {
+                path: "/table3",
+                name: "basetable3",
+                meta: {
+                    title: "新闻表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV4.vue"
                     ),
             },
             {
@@ -149,7 +173,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} | vue-manage-system`;
+    document.title = `${to.meta.title} | 监察中心`;
     const role = localStorage.getItem("ms_username");
     if (!role && to.path !== "/login") {
         next("/login");

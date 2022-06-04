@@ -16,13 +16,7 @@
 					@click="delAllSelection"
 					>批量删除
 				</el-button>
-				<el-button
-					type="primary"
-					icon="el-icon-delete"
-					class="handle-del mr10"
-					@click="handleAdd()"
-					>新增用户
-				</el-button>
+				
 			</div>
 			<el-table
 				:data="currenTableData"
@@ -31,50 +25,19 @@
 				ref="multipleTable"
 				header-cell-class-name="table-header"
 				@selection-change="handleSelectionChange"
-			>
-				<el-table-column
+			>	
+			<el-table-column
 					type="selection"
 					width="55"
 					align="center"
 				></el-table-column>
 				<el-table-column
-					:prop="user_table_head.id"
-					label="ID"
-					width="55"
-					align="center"
-				></el-table-column>
-				<el-table-column :prop="user_table_head.name" label="用户名">
-				</el-table-column>
-				<el-table-column :prop="user_table_head.sex" label="性别">
-				</el-table-column>
-				<el-table-column :prop="user_table_head.password" label="密码">
-					<template #default="scope">{{ scope.row.password }}</template>
-				</el-table-column>
-
-				<el-table-column
-					:prop="user_table_head.email"
-					label="邮箱"
-				></el-table-column>
-
-				<el-table-column label="状态" align="center">
-					<template #default="scope">
-						<el-tag
-							:type="
-								scope.row.grade_id === 1
-									? 'success'
-									: scope.row.grade_id === 0
-									? 'danger'
-									: ''
-							"
-							>{{ scope.row.grade_id === 1 ? "老师" : "学生" }}</el-tag
-						>
-					</template>
-				</el-table-column>
-
-				<el-table-column
-					:prop="user_table_head.header_img"
-					label="注册时间"
-				></el-table-column>
+					v-for="item in table_head"
+					:prop="item"
+					:key="item"
+					:label="item"
+				/>
+				
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
 						<el-button
@@ -104,29 +67,21 @@
 				></el-pagination>
 			</div>
 		</div>
-
-		<!-- 编辑弹出框 -->
 		<el-dialog title="编辑" v-model="editVisible" width="40%">
 			<el-form ref="form" :model="form" label-width="70px">
-				<el-form-item label="用户名">
-					<el-input v-model="form.name"></el-input>
+				<el-form-item :label="table_head.id">
+					<el-input v-model="form.id"></el-input>
 				</el-form-item>
-				<el-form-item label="密码">
-					<el-input v-model="form.password"></el-input>
+				<el-form-item :label="table_head.comment_id">
+					<el-input v-model="form.comment_id"></el-input>
 				</el-form-item>
-				<el-form-item label="邮箱">
-					<el-input v-model="form.email"></el-input>
+				<el-form-item :label="table_head.reply_id">
+					<el-input v-model="form.reply_id"></el-input>
 				</el-form-item>
-				<el-form-item label="身份">
-					<el-input v-model="form.grade_id"></el-input>
+				<el-form-item :label="table_head.content">
+					<el-input v-model="form.content"></el-input>
 				</el-form-item>
-				<el-form-item label="性别">
-					<el-input v-model="form.sex"></el-input>
-				</el-form-item>
-				<el-form-item label="头像">
-					<el-input v-model="form.header_img"></el-input>
-				</el-form-item>
-			</el-form>
+			</el-form>	
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="editVisible = false">取 消</el-button>
@@ -135,34 +90,7 @@
 			</template>
 		</el-dialog>
 
-		<el-dialog title="增加" v-model="editVisible_add" width="40%">
-			<el-form ref="form" :model="form" label-width="70px">
-				<el-form-item label="用户名">
-					<el-input v-model="form.name"></el-input>
-				</el-form-item>
-				<el-form-item label="密码">
-					<el-input v-model="form.password"></el-input>
-				</el-form-item>
-				<el-form-item label="邮箱">
-					<el-input v-model="form.email"></el-input>
-				</el-form-item>
-				<el-form-item label="身份">
-					<el-input v-model="form.grade_id"></el-input>
-				</el-form-item>
-				<el-form-item label="性别">
-					<el-input v-model="form.sex"></el-input>
-				</el-form-item>
-				<el-form-item label="头像">
-					<el-input v-model="form.header_img"></el-input>
-				</el-form-item>
-			</el-form>
-			<template #footer>
-				<span class="dialog-footer">
-					<el-button @click="editVisible_add = false">取 消</el-button>
-					<el-button type="primary" @click="saveEdit_add">确 定</el-button>
-				</span>
-			</template>
-		</el-dialog>
+
 	</div>
 </template>
 
@@ -172,17 +100,15 @@ import crypto from "crypto";
 import axios from "axios";
 export default {
 	setup() {
-		const user_table_head = {
+		const table_head = {
 			id: "id",
-			name: "name",
-			password: "password",
-			email: "email",
-			grade_id: "grade_id",
-			sex: "sex",
-			quantity: "quantity",
-			header_img: "header_img",
-			bg_img: "bg_img",
+			comment_id: "comment_id",
+			reply_id: "reply_id",
+			content: "content",
+			
 		};
+
+		// var form ={}
 		const getmd5 = function (pwd) {
 			var md5 = crypto.createHash("md5");
 			md5.update(pwd);
@@ -190,8 +116,9 @@ export default {
 			return password;
 		};
 		return {
-			user_table_head,
+			table_head,
 			getmd5,
+			// form
 		};
 	},
 	name: "basetable",
@@ -210,6 +137,10 @@ export default {
 			delList: [],
 			editVisible: false,
 			pageTotal: 0,
+			// form: {
+			// 	currentForm:[],
+			// 	table_head:[]
+			// },
 			form: {},
 			idx: -1,
 			id: -1,
@@ -222,13 +153,13 @@ export default {
 		// 获取 数据
 		getData() {
 			axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selectuserUrl}`, {
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selectFeedBackUrl}`, {
 					page1: 1,
 					page2: 50,
 				})
 				.then((res) => {
 					this.tableData = res.data.data;
-					console.log(this.tableData);
+					console.log(res.data.data);
 					this.currenTableData = this.tableData.slice(this.pageIndex * 10, 10);
 					this.pageTotal = this.tableData.length;
 					// this.query.pageSize= this.tableData.length;
@@ -250,11 +181,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delUserUrl}`
+						`${this.$store.state.baseUrl}+${this.$store.state.delFeedbackUrl}`
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`,
+							`${this.$store.state.baseUrl}${this.$store.state.delFeedbackUrl}`,
 							this.form.id
 						)
 						.then(() => {
@@ -280,25 +211,21 @@ export default {
 			for (let i = 0; i < length; i++) {
 				str += this.multipleSelection[i].id + " ";
 				axios
-						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`,
-							{
-								id:this.multipleSelection[i].id 
-							}
-						)
-						.then(() => {
-							this.$message.success("删除成功 防止误删 刷新后重新加载!");
-							// this.tableData.map((value)=>{
-							// 	if (value.id != 1) {
-							// 		console.log(value.id == str)
-							// 	}
-								
+					.post(`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`, {
+						id: this.multipleSelection[i].id,
+					})
+					.then(() => {
+						this.$message.success("删除成功 防止误删 刷新后重新加载!");
+						// this.tableData.map((value)=>{
+						// 	if (value.id != 1) {
+						// 		console.log(value.id == str)
+						// 	}
 
-							// })
-													})
-						.catch((err) => {
-							this.$message.error("ERROR 已报告 W A U 监察中心 >>>>" + err);
-						});
+						// })
+					})
+					.catch((err) => {
+						this.$message.error("ERROR 已报告 W A U 监察中心 >>>>" + err);
+					});
 			}
 			// 删除!
 
@@ -319,15 +246,6 @@ export default {
 		// 保存编辑
 		saveEdit() {
 			this.editVisible = false;
-
-			// this.$set(this.tableData, this.idx, this.form);
-			this.form.password = this.getmd5(this.form.password);
-			this.form.password = this.getmd5(this.form.password);
-			this.form.password = this.getmd5(this.form.password);
-			this.form.password = this.form.password.slice(0, 10);
-
-			console.log(this.form.password);
-
 			const data = console.log(JSON.stringify(this.form));
 			axios
 				.post(
@@ -346,11 +264,6 @@ export default {
 		saveEdit_add() {
 			this.editVisible_add = false;
 
-			// this.$set(this.tableData, this.idx, this.form);
-			this.form.password = this.getmd5(this.form.password);
-			this.form.password = this.getmd5(this.form.password);
-			this.form.password = this.getmd5(this.form.password);
-			this.form.password = this.form.password.slice(0, 10);
 			const data = JSON.stringify(this.form);
 			console.log(data);
 			axios
