@@ -16,7 +16,6 @@
 					@click="delAllSelection"
 					>批量删除
 				</el-button>
-				
 			</div>
 			<el-table
 				:data="currenTableData"
@@ -25,8 +24,8 @@
 				ref="multipleTable"
 				header-cell-class-name="table-header"
 				@selection-change="handleSelectionChange"
-			>	
-			<el-table-column
+			>
+				<el-table-column
 					type="selection"
 					width="55"
 					align="center"
@@ -37,7 +36,7 @@
 					:key="item"
 					:label="item"
 				/>
-				
+
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
 						<el-button
@@ -81,7 +80,7 @@
 				<el-form-item :label="table_head.url">
 					<el-input v-model="form.url"></el-input>
 				</el-form-item>
-			</el-form>	
+			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="editVisible = false">取 消</el-button>
@@ -89,13 +88,12 @@
 				</span>
 			</template>
 		</el-dialog>
-
-
 	</div>
 </template>
 
 <script>
-// import { fetchData } from "../api/index";
+import { qs } from "qs";
+
 import crypto from "crypto";
 import axios from "axios";
 export default {
@@ -105,7 +103,6 @@ export default {
 			name: "name",
 			preview: "preview",
 			url: "url",
-			
 		};
 
 		// var form ={}
@@ -246,13 +243,13 @@ export default {
 		// 保存编辑
 		saveEdit() {
 			this.editVisible = false;
-			const data = console.log(JSON.stringify(this.form));
+			const data = JSON.stringify(this.form)
 			axios
 				.post(
 					`${this.$store.state.baseUrl}${this.$store.state.updateexamUrl}`,
-					{
-						data:data
-					}
+					qs.stringify({
+						data: data,
+					})
 				)
 				.then((res) => {
 					this.$message.success(`修改第 ${this.form.id} 行成功了吗?`);
