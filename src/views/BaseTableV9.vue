@@ -72,14 +72,14 @@
 				<el-form-item :label="table_head.id">
 					<el-input v-model="form.id"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.comment_id">
-					<el-input v-model="form.comment_id"></el-input>
+				<el-form-item :label="table_head.name">
+					<el-input v-model="form.name"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.reply_id">
-					<el-input v-model="form.reply_id"></el-input>
+				<el-form-item :label="table_head.preview">
+					<el-input v-model="form.preview"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.content">
-					<el-input v-model="form.content"></el-input>
+				<el-form-item :label="table_head.url">
+					<el-input v-model="form.url"></el-input>
 				</el-form-item>
 			</el-form>	
 			<template #footer>
@@ -102,9 +102,9 @@ export default {
 	setup() {
 		const table_head = {
 			id: "id",
-			comment_id: "comment_id",
-			reply_id: "reply_id",
-			content: "content",
+			name: "name",
+			preview: "preview",
+			url: "url",
 			
 		};
 
