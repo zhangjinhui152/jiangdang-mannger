@@ -250,7 +250,9 @@ export default {
 			axios
 				.post(
 					`${this.$store.state.baseUrl}${this.$store.state.updateexamUrl}`,
-					data
+					{
+						data:data
+					}
 				)
 				.then((res) => {
 					this.$message.success(`修改第 ${this.form.id} 行成功了吗?`);
