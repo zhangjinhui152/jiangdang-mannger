@@ -40,7 +40,12 @@
 				
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
-						
+						<el-button
+							type="text"
+							icon="el-icon-edit"
+							@click="handleEdit(scope.$index, scope.row)"
+							>编辑
+						</el-button>
 						<el-button
 							type="text"
 							icon="el-icon-delete"
@@ -67,14 +72,17 @@
 				<el-form-item :label="table_head.id">
 					<el-input v-model="form.id"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.comment_id">
-					<el-input v-model="form.comment_id"></el-input>
+				<el-form-item :label="table_head.name">
+					<el-input v-model="form.name"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.reply_id">
-					<el-input v-model="form.reply_id"></el-input>
+				<el-form-item :label="table_head.number">
+					<el-input v-model="form.number"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.content">
-					<el-input v-model="form.content"></el-input>
+				<el-form-item :label="table_head.link">
+					<el-input v-model="form.link"></el-input>
+				</el-form-item>
+				<el-form-item :label="table_head.time">
+					<el-input v-model="form.time"></el-input>
 				</el-form-item>
 			</el-form>	
 			<template #footer>
@@ -97,9 +105,11 @@ export default {
 	setup() {
 		const table_head = {
 			id: "id",
-			comment_id: "comment_id",
-			reply_id: "reply_id",
-			content: "content",
+			name: "name",
+			number: "number",
+			man: "man",
+			link: "link",
+			time: "time",
 			
 		};
 
@@ -148,7 +158,7 @@ export default {
 		// 获取 数据
 		getData() {
 			axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selectFeedBackUrl}`, {
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selectMettingUrl}`, {
 					page1: 1,
 					page2: 50,
 				})
@@ -176,11 +186,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delFeedbackUrl}`
+						`${this.$store.state.baseUrl}+${this.$store.state.delMettingUrl}`
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delFeedbackUrl}`,
+							`${this.$store.state.baseUrl}${this.$store.state.delMettingUrl}`,
 							this.form.id
 						)
 						.then(() => {
@@ -206,7 +216,7 @@ export default {
 			for (let i = 0; i < length; i++) {
 				str += this.multipleSelection[i].id + " ";
 				axios
-					.post(`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`, {
+					.post(`${this.$store.state.baseUrl}${this.$store.state.delMettingUrl}`, {
 						id: this.multipleSelection[i].id,
 					})
 					.then(() => {
@@ -244,7 +254,7 @@ export default {
 			const data = console.log(JSON.stringify(this.form));
 			axios
 				.post(
-					`${this.$store.state.baseUrl}${this.$store.state.updateUserUrl}`,
+					`${this.$store.state.baseUrl}${this.$store.state.updatemettingUrl}`,
 					data
 				)
 				.then((res) => {

@@ -40,7 +40,12 @@
 				
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
-						
+						<el-button
+							type="text"
+							icon="el-icon-edit"
+							@click="handleEdit(scope.$index, scope.row)"
+							>编辑
+						</el-button>
 						<el-button
 							type="text"
 							icon="el-icon-delete"
@@ -64,17 +69,20 @@
 		</div>
 		<el-dialog title="编辑" v-model="editVisible" width="40%">
 			<el-form ref="form" :model="form" label-width="70px">
-				<el-form-item :label="table_head.id">
-					<el-input v-model="form.id"></el-input>
+				<el-form-item :label="table_head.book_id">
+					<el-input v-model="form.book_id"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.comment_id">
-					<el-input v-model="form.comment_id"></el-input>
+				<el-form-item :label="table_head.title">
+					<el-input v-model="form.title"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.reply_id">
-					<el-input v-model="form.reply_id"></el-input>
+				<el-form-item :label="table_head.author">
+					<el-input v-model="form.author"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.content">
-					<el-input v-model="form.content"></el-input>
+				<el-form-item :label="table_head.introduce">
+					<el-input v-model="form.introduce"></el-input>
+				</el-form-item>
+				<el-form-item :label="table_head.img_src">
+					<el-input v-model="form.img_src"></el-input>
 				</el-form-item>
 			</el-form>	
 			<template #footer>
@@ -96,10 +104,11 @@ import axios from "axios";
 export default {
 	setup() {
 		const table_head = {
-			id: "id",
-			comment_id: "comment_id",
-			reply_id: "reply_id",
-			content: "content",
+			book_id: "book_id",
+			title: "title",
+			author: "author",
+			introduce: "introduce",
+			img_src: "img_src",
 			
 		};
 
@@ -148,7 +157,7 @@ export default {
 		// 获取 数据
 		getData() {
 			axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selectFeedBackUrl}`, {
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selectbookUrl}`, {
 					page1: 1,
 					page2: 50,
 				})
@@ -176,11 +185,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delFeedbackUrl}`
+						`${this.$store.state.baseUrl}+${this.$store.state.delbooktUrl}`
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delFeedbackUrl}`,
+							`${this.$store.state.baseUrl}${this.$store.state.delbooktUrl}`,
 							this.form.id
 						)
 						.then(() => {
@@ -244,11 +253,11 @@ export default {
 			const data = console.log(JSON.stringify(this.form));
 			axios
 				.post(
-					`${this.$store.state.baseUrl}${this.$store.state.updateUserUrl}`,
+					`${this.$store.state.baseUrl}${this.$store.state.updatebookUrl}`,
 					data
 				)
 				.then((res) => {
-					this.$message.success(`修改第 ${this.form.id} 行成功了吗?`);
+					this.$message.success(`修改第 ${this.form.book_id} 行成功了吗?`);
 					console.log(res);
 				})
 				.catch((err) => {

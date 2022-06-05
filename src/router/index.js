@@ -51,12 +51,72 @@ const routes = [
                 path: "/table3",
                 name: "basetable3",
                 meta: {
-                    title: "新闻表格",
+                    title: "反馈表格",
                 },
                 component: () =>
                     import(
                         /* webpackChunkName: "table" */
                         "../views/BaseTableV4.vue"
+                    ),
+            },
+            {
+                path: "/table4",
+                name: "basetable4",
+                meta: {
+                    title: "心声表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV5.vue"
+                    ),
+            },
+            {
+                path: "/table5",
+                name: "basetable5",
+                meta: {
+                    title: "图书表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV6.vue"
+                    ),
+            },
+            {
+                path: "/table6",
+                name: "basetable6",
+                meta: {
+                    title: "vr表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV7.vue"
+                    ),
+            },
+            {
+                path: "/table7",
+                name: "basetable7",
+                meta: {
+                    title: "题库表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV8.vue"
+                    ),
+            },
+            {
+                path: "/table8",
+                name: "basetable8",
+                meta: {
+                    title: "会议表格",
+                },
+                component: () =>
+                    import(
+                        /* webpackChunkName: "table" */
+                        "../views/BaseTableV9.vue"
                     ),
             },
             {

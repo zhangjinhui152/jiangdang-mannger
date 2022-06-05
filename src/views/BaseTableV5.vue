@@ -40,7 +40,6 @@
 				
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
-						
 						<el-button
 							type="text"
 							icon="el-icon-delete"
@@ -97,8 +96,8 @@ export default {
 	setup() {
 		const table_head = {
 			id: "id",
-			comment_id: "comment_id",
-			reply_id: "reply_id",
+			user_id: "user_id",
+			time: "time",
 			content: "content",
 			
 		};
@@ -148,7 +147,7 @@ export default {
 		// 获取 数据
 		getData() {
 			axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selectFeedBackUrl}`, {
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selectHeartUrl}`, {
 					page1: 1,
 					page2: 50,
 				})
@@ -176,11 +175,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delFeedbackUrl}`
+						`${this.$store.state.baseUrl}+${this.$store.state.delheartUrl}`
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delFeedbackUrl}`,
+							`${this.$store.state.baseUrl}${this.$store.state.delheartUrl}`,
 							this.form.id
 						)
 						.then(() => {

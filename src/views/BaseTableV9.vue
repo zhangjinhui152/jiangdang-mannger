@@ -40,7 +40,12 @@
 				
 				<el-table-column label="操作" width="180" align="center">
 					<template #default="scope">
-						
+						<el-button
+							type="text"
+							icon="el-icon-edit"
+							@click="handleEdit(scope.$index, scope.row)"
+							>编辑
+						</el-button>
 						<el-button
 							type="text"
 							icon="el-icon-delete"
@@ -148,7 +153,7 @@ export default {
 		// 获取 数据
 		getData() {
 			axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selectFeedBackUrl}`, {
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selecBankkUrl}`, {
 					page1: 1,
 					page2: 50,
 				})
@@ -176,11 +181,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delFeedbackUrl}`
+						`${this.$store.state.baseUrl}+${this.$store.state.delBankUrl}`
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delFeedbackUrl}`,
+							`${this.$store.state.baseUrl}${this.$store.state.delBankUrl}`,
 							this.form.id
 						)
 						.then(() => {
@@ -206,7 +211,7 @@ export default {
 			for (let i = 0; i < length; i++) {
 				str += this.multipleSelection[i].id + " ";
 				axios
-					.post(`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`, {
+					.post(`${this.$store.state.baseUrl}${this.$store.state.delBankUrl}`, {
 						id: this.multipleSelection[i].id,
 					})
 					.then(() => {
@@ -244,7 +249,7 @@ export default {
 			const data = console.log(JSON.stringify(this.form));
 			axios
 				.post(
-					`${this.$store.state.baseUrl}${this.$store.state.updateUserUrl}`,
+					`${this.$store.state.baseUrl}${this.$store.state.updateexamUrl}`,
 					data
 				)
 				.then((res) => {

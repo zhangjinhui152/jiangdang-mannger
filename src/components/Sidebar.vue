@@ -77,8 +77,34 @@ export default {
 							{
 							icon: "el-icon-lx-attention",
 							index: "table3",
-							title: "基础表格",
-						},]
+							title: "新闻表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table4",
+							title: "心声表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table5",
+							title: "book表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table6",
+							title: "vr表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table7",
+							title: "会议表格",
+						},
+							{
+							icon: "el-icon-lx-attention",
+							index: "table8",
+							title: "题库",
+						},
+						]
 				},
 				{
 					icon: "el-icon-lx-copy",
