@@ -64,12 +64,12 @@
 		</div>
 		<el-dialog title="编辑" v-model="editVisible" width="40%">
 			<el-form ref="form" :model="form" label-width="70px">
-				<el-form-item :label="table_head.id">
+				<!-- <el-form-item :label="table_head.id">
 					<el-input v-model="form.id"></el-input>
-				</el-form-item>
-				<el-form-item :label="table_head.comment_id">
+				</el-form-item> -->
+				<!-- <el-form-item :label="table_head.comment_id">
 					<el-input v-model="form.comment_id"></el-input>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item :label="table_head.reply_id">
 					<el-input v-model="form.reply_id"></el-input>
 				</el-form-item>
@@ -96,9 +96,9 @@ import axios from "axios";
 export default {
 	setup() {
 		const table_head = {
-			id: "id",
-			comment_id: "comment_id",
-			reply_id: "reply_id",
+			// id: "id",
+			// comment_id: "comment_id",
+			reply: "reply",
 			content: "content",
 			
 		};

@@ -45,7 +45,7 @@
 				></el-table-column>
 				<el-table-column :prop="table_head.title" label="title">
 				</el-table-column>
-				<el-table-column :prop="table_head.sub_title" label="sub_title">
+				<el-table-column :prop="table_head.time" label="time">
 				</el-table-column>
 				<el-table-column
 					:prop="table_head.preview"
@@ -93,8 +93,8 @@
 				<el-form-item :label="table_head.title">
 					<el-input v-model="form.title"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.sub_title">
-					<el-input v-model="form.sub_title"></el-input>
+				<el-form-item :label="table_head.time">
+					<el-input v-model="form.time"></el-input>
 				</el-form-item>
 				<el-form-item :label="table_head.preview">
 					<el-input v-model="form.preview"></el-input>
@@ -118,7 +118,7 @@
 					<el-input v-model="form.title"></el-input>
 				</el-form-item>
 				<el-form-item label="密码">
-					<el-input v-model="form.sub_title"></el-input>
+					<el-input v-model="form.time"></el-input>
 				</el-form-item>
 				<el-form-item label="邮箱">
 					<el-input v-model="form.previre"></el-input>
@@ -147,7 +147,7 @@ export default {
 		const table_head = {
 			id: "id",
 			title: "title",
-			sub_title: "sub_title",
+			time: "time",
 			preview: "preview",
 			link: "link",
 		};
@@ -222,7 +222,7 @@ export default {
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delNewUrl} ?id=${this.tableData[index].id}`
+							`${this.$store.state.baseUrl}${this.$store.state.delNewUrl}?id=${this.tableData[index].id}`
 						)
 						.then(() => {
 							this.$message.success("删除成功");
