@@ -18,6 +18,7 @@ export default createStore({
         selectVrUrl:"/manage/select/vr", 
         selecBankkUrl:"/manage/select/bank", 
         selectMettingUrl:"/manage/select/meeting", 
+        selecMessageUrl:"/manage/select/message", 
 
         updateUserUrl:"/manage/update/user", 
         updatebookUrl:"/manage/update/book", 

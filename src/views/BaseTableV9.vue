@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import { qs } from "qs";
 
 import crypto from "crypto";
 import axios from "axios";
@@ -243,13 +242,13 @@ export default {
 		// 保存编辑
 		saveEdit() {
 			this.editVisible = false;
-			const data = JSON.stringify(this.form)
+			const data = JSON.stringify(this.form);
 			axios
 				.post(
 					`${this.$store.state.baseUrl}${this.$store.state.updateexamUrl}`,
-					qs.stringify({
+					{
 						data: data,
-					})
+					}
 				)
 				.then((res) => {
 					this.$message.success(`修改第 ${this.form.id} 行成功了吗?`);

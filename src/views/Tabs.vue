@@ -7,22 +7,22 @@
         </div>
         <div class="container">
             <el-tabs v-model="message">
-                <el-tab-pane :label="`未读消息(${unread.length})`" name="first">
+                <el-tab-pane :label="`暂存消息(${unread.length})`" name="first">
                     <el-table :data="unread" :show-header="false" style="width: 100%">
                         <el-table-column>
                             <template #default="scope">
-                                <span class="message-title">{{scope.row.title}}</span>
+                                <span class="message-title">{{scope.row.content}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="date" width="180"></el-table-column>
+                        <el-table-column prop="time" width="180"></el-table-column>
                         <el-table-column width="120">
                             <template #default="scope">
-                                <el-button size="small" @click="handleRead(scope.$index)">标为已读</el-button>
+                                <el-button size="small" @click="handleRead(scope.$index)">标为暂存</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                     <div class="handle-row">
-                        <el-button type="primary">全部标为已读</el-button>
+                        <el-button type="primary">全部标为暂存</el-button>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="`已读消息(${read.length})`" name="second">
@@ -30,10 +30,10 @@
                         <el-table :data="read" :show-header="false" style="width: 100%">
                             <el-table-column>
                                 <template #default="scope">
-                                    <span class="message-title">{{scope.row.title}}</span>
+                                    <span class="message-title">{{scope.row.content}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="date" width="150"></el-table-column>
+                            <el-table-column prop="time" width="150"></el-table-column>
                             <el-table-column width="120">
                                 <template #default="scope">
                                     <el-button type="danger" @click="handleDel(scope.$index)">删除</el-button>
@@ -45,52 +45,46 @@
                         </div>
                     </template>
                 </el-tab-pane>
-                <el-tab-pane :label="`回收站(${recycle.length})`" name="third">
-                    <template v-if="message === 'third'">
-                        <el-table :data="recycle" :show-header="false" style="width: 100%">
-                            <el-table-column>
-                                <template #default="scope">
-                                    <span class="message-title">{{scope.row.title}}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="date" width="150"></el-table-column>
-                            <el-table-column width="120">
-                                <template #default="scope">
-                                    <el-button @click="handleRestore(scope.$index)">还原</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <div class="handle-row">
-                            <el-button type="danger">清空回收站</el-button>
-                        </div>
-                    </template>
-                </el-tab-pane>
+
             </el-tabs>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
     export default {
         name: 'tabs',
+        created(){
+            axios
+				.get(`${this.$store.state.baseUrl}${this.$store.state.selecMessageUrl}`,)
+				.then((res) => {
+					this.unread = res.data.data;
+					console.log(this.unread);
+					// this.query.pageSize= this.tableData.length;
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+        },
         data() {
             return {
                 message: 'first',
                 showHeader: false,
                 unread: [{
-                    date: '2018-04-19 20:00:00',
-                    title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护',
+                    time: '2018-04-19 20:00:00',
+                    content: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护',
                 },{
-                    date: '2018-04-19 21:00:00',
-                    title: '今晚12点整发大红包，先到先得',
+                    time: '2018-04-19 21:00:00',
+                    content: '今晚12点整发大红包，先到先得',
                 }],
                 read: [{
-                    date: '2018-04-19 20:00:00',
-                    title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+                    time: '2018-04-19 20:00:00',
+                    content: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
                 }],
                 recycle: [{
-                    date: '2018-04-19 20:00:00',
-                    title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+                    time: '2018-04-19 20:00:00',
+                    content: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
                 }]
             }
         },
