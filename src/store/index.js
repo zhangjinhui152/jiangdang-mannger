@@ -4,11 +4,13 @@ export default createStore({
     state: {
         tagsList: [],
         collapse: false,
-        baseUrl:"http://127.0.0.1:8081/zhdj-boot",
+        // baseUrl:"http://127.0.0.1:8081/zhdj-boot",
+        baseUrl:"http://127.0.0.1:4523/mock/985489",
         bookUrl:"/manage/insert/book",
         vrUrl:"/manage/insert/vrList",
         newsUrl:"/manage/insert/dynamic", 
         userUrl:"/manage/insert/user", 
+        mettingUrl:"/manage/insert/metting", 
         selectNewUrl:"/manage/select/AllNews", 
         selectuserUrl:"/manage/select/Alluser", 
         selectHeartUrl:"/manage/select/AllHeart", 
@@ -31,7 +33,8 @@ export default createStore({
         delNewUrl:"/manage/delete/news", 
         delFeedbackUrl:"/manage/delete/feedback", 
         delheartUrl:"/manage/delete/heart", 
-
+        delMessageUrl:"/manage/delete/message", 
+        
         delbooktUrl:"/manage/delete/book", 
         delVrUrl:"/manage/delete/vr", 
         delMettingUrl:"/manage/delete/metting", 

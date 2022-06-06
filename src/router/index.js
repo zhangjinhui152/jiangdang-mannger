@@ -140,7 +140,7 @@ const routes = [
                 component: () =>
                     import(
                         /* webpackChunkName: "form" */
-                        "../views/BaseForm.vue"
+                        "../views/BaseFormV2.vue"
                     ),
             },
             {

@@ -63,6 +63,7 @@ export default {
 		let bookUrl = baseUrl + store.state.bookUrl;
 		let vrUrl = baseUrl + store.state.vrUrl;
 		let newsUrl = baseUrl + store.state.newsUrl;
+		let mettingUrl = baseUrl + store.state.mettingUrl;
 		let currentValue = ref("");
 		const options = [
 			{
@@ -78,8 +79,8 @@ export default {
 				label: "上传新闻动态",
 			},
 			{
-				value: "Option4",
-				label: "Option4",
+				value: mettingUrl,
+				label: "上传会议",
 			},
 			{
 				value: "Option5",

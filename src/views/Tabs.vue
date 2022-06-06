@@ -1,123 +1,147 @@
 <template>
-    <div class="">
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-copy"></i> tab选项卡</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <div class="container">
-            <el-tabs v-model="message">
-                <el-tab-pane :label="`暂存消息(${unread.length})`" name="first">
-                    <el-table :data="unread" :show-header="false" style="width: 100%">
-                        <el-table-column>
-                            <template #default="scope">
-                                <span class="message-title">{{scope.row.content}}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="time" width="180"></el-table-column>
-                        <el-table-column width="120">
-                            <template #default="scope">
-                                <el-button size="small" @click="handleRead(scope.$index)">标为暂存</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div class="handle-row">
-                        <el-button type="primary">全部标为暂存</el-button>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="`已读消息(${read.length})`" name="second">
-                    <template v-if="message === 'second'">
-                        <el-table :data="read" :show-header="false" style="width: 100%">
-                            <el-table-column>
-                                <template #default="scope">
-                                    <span class="message-title">{{scope.row.content}}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="time" width="150"></el-table-column>
-                            <el-table-column width="120">
-                                <template #default="scope">
-                                    <el-button type="danger" @click="handleDel(scope.$index)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <div class="handle-row">
-                            <el-button type="danger">删除全部</el-button>
-                        </div>
-                    </template>
-                </el-tab-pane>
-
-            </el-tabs>
-        </div>
-    </div>
+	<div class="">
+		<div class="crumbs">
+			<el-breadcrumb separator="/">
+				<el-breadcrumb-item
+					><i class="el-icon-lx-copy"></i> tab选项卡</el-breadcrumb-item
+				>
+			</el-breadcrumb>
+		</div>
+		<div class="container">
+			<el-tabs v-model="message">
+				<el-tab-pane :label="`消息(${unread.length})`" name="first">
+					<el-table :data="unread" :show-header="false" style="width: 100%">
+						<el-table-column>
+							<template #default="scope">
+								<span class="message-title">{{ scope.row.content }}</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="time" width="180"></el-table-column>
+						<el-table-column width="120">
+							<template #default="scope">
+								<el-button size="small" @click="handleRead(scope.$index)"
+									>标为暂存</el-button
+								>
+							</template>
+						</el-table-column>
+					</el-table>
+					<div class="handle-row">
+						<el-button type="primary">全部标为暂存</el-button>
+					</div>
+				</el-tab-pane>
+				<el-tab-pane :label="`暂存消息(${read.length})`" name="second">
+					<template v-if="message === 'second'">
+						<el-table :data="read" :show-header="false" style="width: 100%">
+							<el-table-column>
+								<template #default="scope">
+									<span class="message-title">{{ scope.row.content }}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="time" width="150"></el-table-column>
+							<el-table-column width="120">
+								<template #default="scope">
+									<el-button type="danger" @click="handleDel(scope.$index)"
+										>删除</el-button
+									>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div class="handle-row">
+							<!-- <el-button type="danger">删除全部</el-button> -->
+						</div>
+					</template>
+				</el-tab-pane>
+			</el-tabs>
+		</div>
+	</div>
 </template>
 
 <script>
 import axios from "axios";
-    export default {
-        name: 'tabs',
-        created(){
+export default {
+	name: "tabs",
+	created() {
+		axios
+			.get(`${this.$store.state.baseUrl}${this.$store.state.selecMessageUrl}`)
+			.then((res) => {
+				this.unread = res.data.data;
+				console.log(this.unread);
+				// this.query.pageSize= this.tableData.length;
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	},
+	data() {
+		return {
+			message: "first",
+			showHeader: false,
+			unread: [
+				{
+					time: "2018-04-19 20:00:00",
+					content: "【系统通知】该系统将于今晚凌晨2点到5点进行升级维护",
+				},
+				{
+					time: "2018-04-19 21:00:00",
+					content: "今晚12点整发大红包，先到先得",
+				},
+			],
+			read: [
+				{
+					time: "2018-04-19 20:00:00",
+					content: "【系统通知】该系统将于今晚凌晨2点到5点进行升级维护",
+				},
+			],
+			recycle: [
+				{
+					time: "2018-04-19 20:00:00",
+					content: "【系统通知】该系统将于今晚凌晨2点到5点进行升级维护",
+				},
+			],
+		};
+	},
+	methods: {
+		handleRead(index) {
+			const item = this.unread.splice(index, 1);
+			console.log(item[0].message_id);
+			this.$message.success("OK")
+			this.read = item.concat(this.read);
+		},
+		handleDel(index) {
+			const item = this.read.splice(index, 1);
+			this.recycle = item.concat(this.recycle);
+		},
+		handleRestore(index) {
+			const item = this.recycle.splice(index, 1);
+            this.$message.success("OK")
             axios
-				.get(`${this.$store.state.baseUrl}${this.$store.state.selecMessageUrl}`,)
+				.delete(
+					`${this.$store.state.baseUrl}${this.$store.state.delMessageUrl}`,
+					{ id: item[0].message_id }
+				)
 				.then((res) => {
-					this.unread = res.data.data;
-					console.log(this.unread);
-					// this.query.pageSize= this.tableData.length;
+					console.log(res);
 				})
 				.catch((err) => {
 					console.error(err);
 				});
-        },
-        data() {
-            return {
-                message: 'first',
-                showHeader: false,
-                unread: [{
-                    time: '2018-04-19 20:00:00',
-                    content: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护',
-                },{
-                    time: '2018-04-19 21:00:00',
-                    content: '今晚12点整发大红包，先到先得',
-                }],
-                read: [{
-                    time: '2018-04-19 20:00:00',
-                    content: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-                }],
-                recycle: [{
-                    time: '2018-04-19 20:00:00',
-                    content: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-                }]
-            }
-        },
-        methods: {
-            handleRead(index) {
-                const item = this.unread.splice(index, 1);
-                console.log(item);
-                this.read = item.concat(this.read);
-            },
-            handleDel(index) {
-                const item = this.read.splice(index, 1);
-                this.recycle = item.concat(this.recycle);
-            },
-            handleRestore(index) {
-                const item = this.recycle.splice(index, 1);
-                this.read = item.concat(this.read);
-            }
-        },
-        computed: {
-            unreadNum(){
-                return this.unread.length;
-            }
-        }
-    }
-
+			this.read = item.concat(this.read);
+		},
+	},
+	computed: {
+		unreadNum() {
+			return this.unread.length;
+		},
+	},
+};
 </script>
 
 <style>
-.message-title{
-    cursor: pointer;
+.message-title {
+	cursor: pointer;
 }
-.handle-row{
-    margin-top: 30px;
+.handle-row {
+	margin-top: 30px;
 }
 </style>
 
