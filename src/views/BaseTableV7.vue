@@ -246,7 +246,7 @@ export default {
 		// 保存编辑
 		saveEdit() {
 			this.editVisible = false;
-			const data = console.log(JSON.stringify(this.form));
+			const data = JSON.stringify(this.form)
 			axios
 				.post(
 					`${this.$store.state.baseUrl}${this.$store.state.updatevrUrl}`,
