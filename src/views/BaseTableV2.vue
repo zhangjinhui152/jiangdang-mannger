@@ -254,8 +254,7 @@ export default {
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}`,
-							this.form.id
+							`${this.$store.state.baseUrl}${this.$store.state.delUserUrl}?id=${this.tableData[index].id}`
 						)
 						.then(() => {
 							this.$message.success("删除成功");

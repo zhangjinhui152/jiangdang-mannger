@@ -177,12 +177,11 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delBankUrl}`
+					this.tableData[index]
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delBankUrl}`,
-							this.form.id
+							`${this.$store.state.baseUrl}${this.$store.state.delBankUrl}?id=${this.tableData[index].id}`
 						)
 						.then(() => {
 							this.$message.success("删除成功");

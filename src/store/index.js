@@ -4,8 +4,8 @@ export default createStore({
     state: {
         tagsList: [],
         collapse: false,
-        // baseUrl:"http://127.0.0.1:8081/zhdj-boot",
-        baseUrl:"http://127.0.0.1:4523/mock/985489",
+        baseUrl:"http://127.0.0.1:8081/zhdj-boot",
+        // baseUrl:"http://127.0.0.1:4523/mock/985489",
         bookUrl:"/manage/insert/book",
         vrUrl:"/manage/insert/vrList",
         newsUrl:"/manage/insert/dynamic", 
