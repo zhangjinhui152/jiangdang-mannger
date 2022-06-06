@@ -51,7 +51,7 @@ export default {
 			form: {
 				send_id: 0,
 				content: "",
-				date1: "",
+				time: "",
 				date2: "",
 			},
 		};
