@@ -74,8 +74,8 @@
 				<el-form-item :label="table_head.name">
 					<el-input v-model="form.name"></el-input>
 				</el-form-item>
-				<el-form-item :label="table_head.preview">
-					<el-input v-model="form.preview"></el-input>
+				<el-form-item :label="table_head.perview">
+					<el-input v-model="form.perview"></el-input>
 				</el-form-item>
 				<el-form-item :label="table_head.url">
 					<el-input v-model="form.url"></el-input>
@@ -100,7 +100,7 @@ export default {
 		const table_head = {
 			id: "id",
 			name: "name",
-			preview: "preview",
+			perview: "perview",
 			url: "url",
 		};
 
@@ -242,6 +242,7 @@ export default {
 		saveEdit() {
 			this.editVisible = false;
 			const data = JSON.stringify(this.form);
+			console.log("111111111111111"+data)
 			axios
 				.post(
 					`${this.$store.state.baseUrl}${this.$store.state.updateexamUrl}`,
