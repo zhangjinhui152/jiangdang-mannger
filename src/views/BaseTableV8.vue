@@ -190,8 +190,7 @@ export default {
 					);
 					axios
 						.post(
-							`${this.$store.state.baseUrl}${this.$store.state.delMettingUrl}`,
-							this.form.id
+							`${this.$store.state.baseUrl}${this.$store.state.delMettingUrl}?id=${this.tableData[index].id}`
 						)
 						.then(() => {
 							this.$message.success("删除成功");
