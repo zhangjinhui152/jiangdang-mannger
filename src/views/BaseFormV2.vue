@@ -22,18 +22,12 @@
 							<el-date-picker
 								type="date"
 								placeholder="选择日期"
-								v-model="form.date1"
+								v-model="form.time"
 								style="width: 100%"
 							></el-date-picker>
 						</el-col>
 						<el-col class="line" :span="2">-</el-col>
-						<el-col :span="11">
-							<el-time-picker
-								placeholder="选择时间"
-								v-model="form.date2"
-								style="width: 100%"
-							></el-time-picker>
-						</el-col>
+						
 					</el-form-item>
 					<el-button type="primary" @click="onSubmit">提交</el-button>
 				</el-form>
@@ -52,13 +46,14 @@ export default {
 				send_id: 0,
 				content: "",
 				time: "",
-				date2: "",
 			},
 		};
 	},
 	methods: {
 		onSubmit() {
-			const data = JSON.stringify(this.form);
+			let arr = []
+			arr.push(this.form)
+			const data = JSON.stringify(arr);
             console.log(data)
 			axios
 				.post(`${this.$store.state.baseUrl}${this.$store.state.mettingUrl}`, {

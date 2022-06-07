@@ -110,14 +110,10 @@ export default {
 		handleDel(index) {
 			const item = this.read.splice(index, 1);
 			this.recycle = item.concat(this.recycle);
-		},
-		handleRestore(index) {
-			const item = this.recycle.splice(index, 1);
-            this.$message.success("OK")
-            axios
+			console.log(item[0].message_id)
+			axios
 				.delete(
-					`${this.$store.state.baseUrl}${this.$store.state.delMessageUrl}`,
-					{ id: item[0].message_id }
+					`${this.$store.state.baseUrl}${this.$store.state.delMessageUrl}?id=${item[0].message_id}`,
 				)
 				.then((res) => {
 					console.log(res);
@@ -125,6 +121,22 @@ export default {
 				.catch((err) => {
 					console.error(err);
 				});
+			this.recycle = item.concat(this.recycle);
+		},
+		handleRestore(index) {
+			const item = this.recycle.splice(index, 1);
+            this.$message.success("OK")
+            // axios
+			// 	.delete(
+			// 		`${this.$store.state.baseUrl}${this.$store.state.delMessageUrl}`,
+			// 		{ id: item[0].message_id }
+			// 	)
+			// 	.then((res) => {
+			// 		console.log(res);
+			// 	})
+			// 	.catch((err) => {
+			// 		console.error(err);
+			// 	});
 			this.read = item.concat(this.read);
 		},
 	},

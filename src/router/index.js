@@ -147,7 +147,7 @@ const routes = [
                 path: "/tabs",
                 name: "tabs",
                 meta: {
-                    title: "tab标签",
+                    title: "消息标签",
                 },
                 component: () =>
                     import(

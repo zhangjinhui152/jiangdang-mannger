@@ -96,7 +96,7 @@ import axios from "axios";
 export default {
 	setup() {
 		const table_head = {
-			// id: "id",
+			id: "id",
 			// comment_id: "comment_id",
 			reply: "reply",
 			content: "content",
@@ -176,7 +176,7 @@ export default {
 			})
 				.then(() => {
 					console.log(
-						`${this.$store.state.baseUrl}+${this.$store.state.delFeedbackUrl}`
+						this.tableData[index].id
 					);
 					axios
 						.post(

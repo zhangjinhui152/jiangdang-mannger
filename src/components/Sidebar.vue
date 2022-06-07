@@ -77,7 +77,7 @@ export default {
 							{
 							icon: "el-icon-lx-attention",
 							index: "table3",
-							title: "新闻表格",
+							title: "反馈表格",
 						},
 							{
 							icon: "el-icon-lx-attention",
@@ -109,7 +109,7 @@ export default {
 				{
 					icon: "el-icon-lx-copy",
 					index: "tabs",
-					title: "tab选项卡",
+					title: "消息",
 				},
 				{
 					icon: "el-icon-lx-calendar",
