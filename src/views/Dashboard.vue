@@ -40,8 +40,8 @@
 							<div class="grid-content grid-con-1">
 								<i class="el-icon-user-solid grid-con-icon"></i>
 								<div class="grid-cont-right">
-									<div class="grid-num">1234</div>
-									<div>用户访问量</div>
+									<div class="grid-num">{{ twiceTheCounter }}</div>
+									<div>当前时间</div>
 								</div>
 							</div>
 						</el-card>
@@ -51,7 +51,7 @@
 							<div class="grid-content grid-con-2">
 								<i class="el-icon-message-solid grid-con-icon"></i>
 								<div class="grid-cont-right">
-									<div class="grid-num">321</div>
+									<div class="grid-num">系统管理员</div>
 									<div>系统消息</div>
 								</div>
 							</div>
@@ -60,10 +60,10 @@
 					<el-col :span="8">
 						<el-card shadow="hover" :body-style="{ padding: '0px' }">
 							<div class="grid-content grid-con-3">
-								<i class="el-icon-s-goods grid-con-icon"></i>
+								<i class="el-icon-s-promotion grid-con-icon"></i>
 								<div class="grid-cont-right">
-									<div class="grid-num">5000</div>
-									<div>数量</div>
+									<div class="grid-num" style="font-size:15px">{{ data }}</div>
+									
 								</div>
 							</div>
 						</el-card>
@@ -111,8 +111,38 @@
 </template>
 
 <script>
+import { ref, computed, onMounted } from "vue";
 export default {
 	name: "dashboard",
+	setup() {
+		const data = ref("我们目送消散而去的航迹云");
+		const twiceTheCounter = computed(() => {
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth();
+			return year + "年" + month + "月";
+		});
+
+		onMounted(() => {
+			// ...api2
+			api2();
+		});
+		const api2 = () => {
+			fetch("https://tenapi.cn/yiyan/")
+				.then((res) => {
+					return res.text(); // res.text()是一个Promise对象
+				})
+				.then((res) => {
+					data.value = res
+					console.log(res); // res是最终的结果
+				});
+		};
+		return {
+			twiceTheCounter,
+			data,
+			api2,
+		};
+	},
 	data() {
 		return {
 			name: localStorage.getItem("ms_username"),
@@ -142,7 +172,6 @@ export default {
 					status: true,
 				},
 			],
-			
 		};
 	},
 
