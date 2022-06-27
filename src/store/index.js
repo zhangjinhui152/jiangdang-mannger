@@ -1,44 +1,45 @@
-import {createStore} from 'vuex'
+import { createStore } from 'vuex'
 
 export default createStore({
     state: {
         tagsList: [],
         collapse: false,
-        baseUrl:"http://127.0.0.1:8081/zhdj-boot",
+        baseUrl: "http://localhost:8080/zhdj-boot",
         // baseUrl:"http://127.0.0.1:4523/mock/985489",
-        bookUrl:"/manage/insert/book",
-        vrUrl:"/manage/insert/vrList",
-        newsUrl:"/manage/insert/dynamic", 
-        userUrl:"/manage/insert/user", 
-        mettingUrl:"/manage/insert/metting", 
-        selectNewUrl:"/manage/select/AllNews", 
-        selectuserUrl:"/manage/select/Alluser", 
-        selectHeartUrl:"/manage/select/AllHeart", 
-        selectFeedBackUrl:"/manage/select/AllFeedBack", 
-        
-        selectbookUrl:"/manage/select/book", 
-        selectVrUrl:"/manage/select/vr", 
-        selecBankkUrl:"/manage/select/bank", 
-        selectMettingUrl:"/manage/select/meeting", 
-        selecMessageUrl:"/manage/select/message", 
+        bookUrl: "/manage/insert/book",
+        vrUrl: "/manage/insert/vrList",
+        newsUrl: "/manage/insert/dynamic",
+        userUrl: "/manage/insert/user",
+        mettingUrl: "/manage/insert/metting",
+        messageUrl: "/manage/insert/message",
+        selectNewUrl: "/manage/select/AllNews",
+        selectuserUrl: "/manage/select/Alluser",
+        selectHeartUrl: "/manage/select/AllHeart",
+        selectFeedBackUrl: "/manage/select/AllFeedBack",
 
-        updateUserUrl:"/manage/update/user", 
-        updatebookUrl:"/manage/update/book", 
-        updatevrUrl:"/manage/update/vr", 
-        updatemettingUrl:"/manage/update/metting", 
-        updateexamUrl:"/manage/update/exam", 
+        selectbookUrl: "/manage/select/book",
+        selectVrUrl: "/manage/select/vr",
+        selecBankkUrl: "/manage/select/bank",
+        selectMettingUrl: "/manage/select/meeting",
+        selecMessageUrl: "/manage/select/message",
+
+        updateUserUrl: "/manage/update/user",
+        updatebookUrl: "/manage/update/book",
+        updatevrUrl: "/manage/update/vr",
+        updatemettingUrl: "/manage/update/metting",
+        updateexamUrl: "/manage/update/exam",
 
 
-        delUserUrl:"/manage/delete/user", 
-        delNewUrl:"/manage/delete/news", 
-        delFeedbackUrl:"/manage/delete/feedback", 
-        delheartUrl:"/manage/delete/heart", 
-        delMessageUrl:"/manage/delete/message", 
-        
-        delbooktUrl:"/manage/delete/book", 
-        delVrUrl:"/manage/delete/vr", 
-        delMettingUrl:"/manage/delete/metting", 
-        delBankUrl:"/manage/delete/bank", 
+        delUserUrl: "/manage/delete/user",
+        delNewUrl: "/manage/delete/news",
+        delFeedbackUrl: "/manage/delete/feedback",
+        delheartUrl: "/manage/delete/heart",
+        delMessageUrl: "/manage/delete/message",
+
+        delbooktUrl: "/manage/delete/book",
+        delVrUrl: "/manage/delete/vr",
+        delMettingUrl: "/manage/delete/metting",
+        delBankUrl: "/manage/delete/bank",
 
     },
     mutations: {
